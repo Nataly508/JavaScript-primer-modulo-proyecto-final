@@ -25,12 +25,21 @@ function agregarCategoria(nuevaCategoria) {
 
 //Funcion para agregar una nueva tarea al array
 function agregarTarea(nombreRecibido, fechaLimiteRecibida = null) {
-  tareas.push({
-    nombre: nombreRecibido,
-    completada: false,
-    fechaLimite: fechaLimiteRecibida,
-  });
-  console.log("Tarea Agreagada exitosamente");
+  mostrarCategorias();
+  let numeroCategoria = parseInt(
+    prompt("Ingrese el numero de la categoria para la nueva tarea: ")
+  );
+  if (numeroCategoria >= 0 && numeroCategoria < categorias.length) {
+    tareas.push({
+      nombre: nombreRecibido,
+      completada: false,
+      fechaLimite: fechaLimiteRecibida,
+      categoria: numeroCategoria,
+    });
+    console.log("Tarea Agreagada exitosamente");
+  } else {
+    console.log("Numero de categoria incorrecto");
+  }
 }
 
 //Funcion para eliminar una tarea
