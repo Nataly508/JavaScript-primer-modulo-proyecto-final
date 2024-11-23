@@ -2,6 +2,26 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 //Array para almacenar las tareas
 let tareas = [];
+let categorias = [
+  "Trabajo",
+  "Personal",
+  //Agregar mas categorias segun se necesite
+  // los strings tambien se comportan como arrays, cada caracter es un dato
+];
+
+//Funcion que muestra las categorias
+function mostrarCategorias() {
+  console.log("Categorias existentes: ");
+  categorias.forEach(function (categoria, indice) {
+    console.log(indice + ": " + categoria);
+  }); // puedo aplicar este metodos a la matriz porque es un arreglo dentro de otro arreglo
+}
+
+// funcion para agregar mas categorias por el usuario
+function agregarCategoria(nuevaCategoria) {
+  categorias.push(nuevaCategoria); // metodo que agrega el dato ingresado al final del array
+  console.log("Categoria " + nuevaCategoria + " agregada con exito");
+}
 
 //Funcion para agregar una nueva tarea al array
 function agregarTarea(nombreRecibido, fechaLimiteRecibida = null) {
@@ -54,6 +74,8 @@ function mostrarMenu() {
   console.log("3. Marcar tarea como completada");
   console.log("4. Modificar una Tarea");
   console.log("5. Mostrar todas las Tareas");
+  console.log("6. Ver todas las categorias");
+  console.log("7. Agregar Categoria");
   console.log("0. Salir");
 }
 
@@ -93,6 +115,17 @@ function interactuar() {
       case 5:
         console.log("Lista de tareas: ");
         console.log(tareas);
+        break;
+
+      case 6:
+        mostrarCategorias();
+        break;
+
+      case 7:
+        let nombreNuevaCategoria = prompt(
+          "Ingrese el nombre de la nueva categoria: "
+        );
+        agregarCategoria(nombreNuevaCategoria);
         break;
 
       default:
