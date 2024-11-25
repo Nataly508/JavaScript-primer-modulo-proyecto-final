@@ -63,12 +63,23 @@ function completarTarea(indice) {
 }
 
 //Funcion para modificar una tarea especifica
-function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null) {
+function modificarTarea(
+  indice,
+  nuevoNombre,
+  nuevaFechaLimite = null,
+  nuevoNumeroCategoria
+) {
   if (indice >= 0 && indice < tareas.length) {
-    tareas[indice].nombre = nuevoNombre;
-    if (nuevaFechaLimite !== null) {
-      tareas[indice].fechaLimite = nuevaFechaLimite;
-    }
+    tareas[indice].nombre =
+      nuevoNombre !== undefined ? nuevoNombre : tareas[indice].nombre;
+    tareas[indice].fechaLimite =
+      nuevaFechaLimite !== undefined
+        ? nuevaFechaLimite
+        : tareas[indice].fechaLimite;
+    tareas[indice].categoria =
+      nuevoNumeroCategoria !== undefined
+        ? nuevoNumeroCategoria
+        : tareas[indice].categoria;
     console.log("Tarea modificada con exito");
   } else {
     console.log("Indice de tarea invalido");
@@ -117,6 +128,48 @@ function interactuar() {
 
       case 4:
         let indice = parseInt(prompt("Ingrese el indice a modificar: "));
+        if (indice >= 0 && indice < tareas.length) {
+          let opcion = parseInt(
+            prompt(
+              "Que propiedad desea modificar? 1. Nombre, 2. Fecha limite, 3. Categoria "
+            )
+          );
+
+          switch (opcion) {
+            case 1:
+              let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
+              modificarTarea(indice, nuevoNombre);
+              break;
+
+            case 2:
+              let nuevaFechaLimite = prompt("Ingrese nueva fecha limite");
+              modificarTarea(indice, undefined, nuevaFechaLimite);
+              break;
+
+            case 3:
+              let nuevoNumeroCategoria = parseInt(
+                prompt("Ingrese nuevo numero de categoria")
+              );
+              if (
+                nuevoNumeroCategoria >= 0 &&
+                nuevoNumeroCategoria < categorias.length
+              ) {
+                modificarTarea(
+                  indice,
+                  undefined,
+                  undefined,
+                  nuevoNumeroCategoria
+                );
+              }
+              break;
+
+            default:
+              break;
+          }
+        } else {
+          console.log("Indice de tarea incorrecto");
+        }
+
         let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
         modificarTarea(indice, nuevoNombre);
         break;
