@@ -86,6 +86,48 @@ function modificarTarea(
   }
 }
 
+// Funcion para filtrar tareas por categoria
+function filtarTareasCategoria(numeroCategoria) {
+  let tareasFiltradas = tareas.filter(function (tarea) {
+    return tarea.categoria === numeroCategoria;
+  });
+  return tareasFiltradas;
+}
+
+//Funcion para mostrar cuantas tareas se han completado
+function contarTareasCompletadas(numeroCategoria) {
+  let tareasCategoria = filtarTareasCategoria(numeroCategoria);
+  let tareasCompletadas = tareasCategoria.reduce(function (contador, tarea) {
+    return tarea.completada ? contador + 1 : contador;
+  }, 0);
+
+  let tareasEntotal = tareasCategoria.length;
+  console.log(
+    "Tareas completadas de la categoria " +
+      numeroCategoria +
+      ": " +
+      tareasCompletadas +
+      " de " +
+      tareasEntotal +
+      " tareas"
+  );
+}
+
+// Funcion para mostrar las tareas imcompletas
+function mostrarIncompletas() {
+  console.log("Tareas no completadas: ");
+  tareas.forEach(function (tarea) {
+    if (!tarea.completada) {
+      console.log(
+        " - Nombre: " +
+          tarea.nombre +
+          ", Categoria: " +
+          categorias[tarea.categoria]
+      );
+    }
+  });
+}
+
 //Funcion para mostrar opciones
 function mostrarMenu() {
   console.log("--Menu--");
@@ -96,6 +138,9 @@ function mostrarMenu() {
   console.log("5. Mostrar todas las Tareas");
   console.log("6. Ver todas las categorias");
   console.log("7. Agregar Categoria");
+  console.log("8. Filtrar tareas por cateogria");
+  console.log("9. Visualizar cantidad de tareas completadas por categoria");
+  console.log("10. Visualizar todas las tareas no completadas");
   console.log("0. Salir");
 }
 
@@ -148,7 +193,7 @@ function interactuar() {
 
             case 3:
               let nuevoNumeroCategoria = parseInt(
-                prompt("Ingrese nuevo numero de categoria")
+                prompt("Ingrese nuevo numero de categoria: ")
               );
               if (
                 nuevoNumeroCategoria >= 0 &&
@@ -188,6 +233,28 @@ function interactuar() {
           "Ingrese el nombre de la nueva categoria: "
         );
         agregarCategoria(nombreNuevaCategoria);
+        break;
+
+      case 8:
+        mostrarCategorias();
+        let numeroCategoriaFiltrada = parseInt(
+          prompt("Ingrese el numero de la categoria a filtrar")
+        );
+        let tareasCategoria = filtarTareasCategoria(numeroCategoriaFiltrada);
+        console.log("Estas son las tareas de la Categoria Seleccionada: ");
+        console.log(tareasCategoria);
+        break;
+
+      case 9:
+        mostrarCategorias();
+        let numCategoria = parseInt(
+          prompt("Ingrese el numero de la catogria a visualizar: ")
+        );
+        contarTareasCompletadas(numCategoria);
+        break;
+
+      case 10:
+        mostrarIncompletas();
         break;
 
       default:
